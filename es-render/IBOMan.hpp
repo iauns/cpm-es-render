@@ -30,6 +30,14 @@ public:
   /// Use sparingly.
   GLuint hasIBO(const std::string& assetName) const;
 
+  // Use this structure if you are storing IBO data for later retrieval.
+  struct MinIBOData
+  {
+    GLenum primMode;
+    GLenum primType;
+    GLsizei numPrims;
+  };
+
   struct IBOData
   {
     IBOData(const std::string& name, GLenum pmode, GLenum ptype, GLsizei nprims) :
