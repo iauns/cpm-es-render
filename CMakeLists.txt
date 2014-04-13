@@ -49,7 +49,8 @@ CPM_AddModule("es_cereal"
 
 # ++ MODULE: ES Systems
 CPM_AddModule("es_systems"
-  SOURCE_DIR "../cpm-es-systems"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-es-systems"
+  GIT_TAG "origin/master"
   USE_EXISTING_VER TRUE
   )
 
