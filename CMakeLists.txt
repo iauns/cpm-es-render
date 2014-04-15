@@ -95,7 +95,8 @@ CPM_AddModule("lodepng"
 
 # ++ MODULE: bserialize library (primarily for loading fonts).
 CPM_AddModule("bserialize"
-  SOURCE_DIR "../cpm-bserialize"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-bserialize"
+  GIT_TAG "origin/master"
   FORWARD_DECLARATION TRUE)
 
 # ++ MODULE: Arc-Look-At (Autoview Camera)
