@@ -65,7 +65,8 @@ CPM_AddModule("es_general"
 
 # ++ MODULE: Cereal support for serializing GLM.
 CPM_AddModule("cereal_glm"
-  SOURCE_DIR "../cpm-cereal-glm"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-cereal-glm"
+  GIT_TAG "origin/master"
   USE_EXISTING_VER TRUE)
 
 # ++ MODULE: GLM
