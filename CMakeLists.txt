@@ -61,7 +61,8 @@ CPM_AddModule("es_fs"
 
 # ++ MODULE: General transforms and components
 CPM_AddModule("es_general"
-  SOURCE_DIR "../cpm-es-general"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-es-general"
+  GIT_TAG "origin/master"
   USE_EXISTING_VER TRUE)
 
 # ++ MODULE: Cereal support for serializing GLM.
