@@ -55,7 +55,8 @@ CPM_AddModule("es_systems"
 
 # ++ MODULE: Async filesystem support
 CPM_AddModule("es_fs"
-  SOURCE_DIR "../cpm-es-fs"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-es-fs"
+  GIT_TAG "origin/master"
   USE_EXISTING_VER TRUE)
 
 # ++ MODULE: General transforms and components
