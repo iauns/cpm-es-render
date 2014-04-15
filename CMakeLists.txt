@@ -107,7 +107,8 @@ CPM_AddModule("look_at"
 
 # ++ MODULE: var buffer - for generating VBO buffers
 CPM_AddModule("var_buffer"
-  SOURCE_DIR "../cpm-var-buffer"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-var-buffer"
+  GIT_TAG "origin/master"
   EXPORT_MODULE TRUE)
 
 # I don't want more than one version of this module running around.
