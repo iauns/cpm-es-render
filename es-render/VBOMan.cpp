@@ -62,7 +62,7 @@ void VBOMan::addVBOAttributes(GLuint glid, const std::vector<std::tuple<std::str
   }
 }
 
-const std::vector<shaders::ShaderAttribute>& VBOMan::getVBOAttributes(GLuint glid)
+const std::vector<shaders::ShaderAttribute>& VBOMan::getVBOAttributes(GLuint glid) const
 {
   auto it = mVBOData.find(glid);
   if (it != mVBOData.end())

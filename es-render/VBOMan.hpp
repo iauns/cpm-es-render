@@ -53,7 +53,7 @@ public:
                         const std::string& assetName);
 
   /// Returns a list of sorted VBO attributes, based on glid.
-  const std::vector<CPM_GL_SHADERS_NS::ShaderAttribute>& getVBOAttributes(GLuint glid);
+  const std::vector<CPM_GL_SHADERS_NS::ShaderAttribute>& getVBOAttributes(GLuint glid) const;
 
   /// Returns true if \p assetName is in the VBO man. Use sparingly.
   GLuint hasVBO(const std::string& assetName) const;
