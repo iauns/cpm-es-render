@@ -8,10 +8,11 @@
 
 namespace ren {
 
+/// \todo Transition this class to use the template ShaderVBOAttribs class
+///       under utils (utils/Shader.hpp).
 struct RenderSimpleGeom
 {
   // -- Data --
-
   static const int MaxNumAttributes = 5;
   
   int attribSize;     ///< How many elements in 'appliedAttribs' are valid.
