@@ -2,6 +2,7 @@
 #include <gl-platform/GLPlatform.hpp>
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
+#include <es-acorn/Acorn.hpp>
 
 #include <es-general/comp/Transform.hpp>
 #include <es-general/comp/StaticGlobalTime.hpp>
@@ -132,9 +133,9 @@ public:
   }
 };
 
-void registerSystem_DebugRenderClickBox2D()
+void registerSystem_DebugRenderClickBox2D(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<DebugRenderClickBox2DSys>();
+  core.registerSystem<DebugRenderClickBox2DSys>();
 }
 
 const char* getSystemName_DebugRenderClickBox2D()

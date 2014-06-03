@@ -152,10 +152,10 @@ public:
   }
 };
 
-void IBOMan::registerSystems()
+void IBOMan::registerSystems(CPM_ES_ACORN_NS::Acorn& core)
 {
   // Register the garbage collector.
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<IBOGarbageCollector>();
+  core.registerSystem<IBOGarbageCollector>();
 }
 
 void IBOMan::runGCCycle(CPM_ES_NS::ESCoreBase& core)

@@ -4,6 +4,7 @@
 #include <es-fs/fscomp/StaticFS.hpp>
 #include <lodepng/lodepng.h>
 #include <entity-system/GenericSystem.hpp>
+#include <es-acorn/Acorn.hpp>
 
 #include "TextureMan.hpp"
 #include "comp/Texture.hpp"
@@ -608,10 +609,10 @@ const char* TextureMan::getGCName()
   return TextureGarbageCollector::getName();
 }
 
-void TextureMan::registerSystems()
+void TextureMan::registerSystems(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<TexturePromiseFulfillment>();
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<TextureGarbageCollector>();
+  core.registerSystem<TexturePromiseFulfillment>();
+  core.registerSystem<TextureGarbageCollector>();
 }
 
 void TextureMan::runGCCycle(CPM_ES_NS::ESCoreBase& core)

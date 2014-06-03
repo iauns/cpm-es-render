@@ -7,6 +7,7 @@
 #include <gl-shaders/GLShader.hpp>
 #include <entity-system/BaseSystem.hpp>
 #include <es-systems/SystemCore.hpp>
+#include <es-acorn/Acorn.hpp>
 
 namespace ren {
 
@@ -38,7 +39,7 @@ public:
   void runGCCycle(CPM_ES_NS::ESCoreBase& core);
 
   /// Registers just the promise fullfilment system and the garbage collector.
-  static void registerSystems();
+  static void registerSystems(CPM_ES_ACORN_NS::Acorn& core);
 
   /// Retrieves GeomMan's garbage collector name.
   static const char* getGCName();

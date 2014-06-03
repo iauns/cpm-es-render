@@ -7,6 +7,7 @@
 #include <entity-system/BaseSystem.hpp>
 #include <es-systems/SystemCore.hpp>
 #include <gl-platform/GLPlatform.hpp>
+#include <es-acorn/Acorn.hpp>
 
 namespace ren {
 
@@ -41,7 +42,7 @@ public:
 
   /// Registers TextureMan's systems. Both the garbage collector and the promise
   /// fullfillment system are registered.
-  static void registerSystems();
+  static void registerSystems(CPM_ES_ACORN_NS::Acorn& core);
 
   /// Obtains the garbage collectors name so that you can setup intermitent
   /// garbage collection cycles.

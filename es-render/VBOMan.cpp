@@ -191,10 +191,10 @@ public:
   }
 };
 
-void VBOMan::registerSystems()
+void VBOMan::registerSystems(CPM_ES_ACORN_NS::Acorn& core)
 {
   // Register the garbage collector.
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<VBOGarbageCollector>();
+  core.registerSystem<VBOGarbageCollector>();
 }
 
 void VBOMan::runGCCycle(CPM_ES_NS::ESCoreBase& core)

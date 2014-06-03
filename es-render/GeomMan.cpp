@@ -530,10 +530,10 @@ const char* GeomMan::getGCName()
   return GeomGarbageCollector::getName();
 }
 
-void GeomMan::registerSystems()
+void GeomMan::registerSystems(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<GeomPromiseFulfillment>();
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<GeomGarbageCollector>();
+  core.registerSystem<GeomPromiseFulfillment>();
+  core.registerSystem<GeomGarbageCollector>();
 }
 
 void GeomMan::runGCCycle(CPM_ES_NS::ESCoreBase& core)

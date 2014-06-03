@@ -40,9 +40,9 @@ CPM_AddModule("es"
   USE_EXISTING_VER TRUE
   EXPORT_MODULE TRUE)
 
-# ++ MODULE: ES Cereal
-CPM_AddModule("es_cereal"
-  GIT_REPOSITORY "https://github.com/iauns/cpm-es-cereal"
+# ++ MODULE: ES Acorn
+CPM_AddModule("es_acorn"
+  GIT_REPOSITORY "https://github.com/iauns/cpm-es-acorn"
   GIT_TAG "origin/master"
   USE_EXISTING_VER TRUE
   EXPORT_MODULE TRUE)

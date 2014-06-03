@@ -423,12 +423,11 @@ const char* FontMan::getGCName()
   return FontGarbageCollector::getName();
 }
 
-void FontMan::registerSystems()
+void FontMan::registerSystems(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<FontPromiseFulfillment>();
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<FontGarbageCollector>();
+  core.registerSystem<FontPromiseFulfillment>();
+  core.registerSystem<FontGarbageCollector>();
 }
-
 
 void FontMan::runGCCycle(CPM_ES_NS::ESCoreBase& core)
 {

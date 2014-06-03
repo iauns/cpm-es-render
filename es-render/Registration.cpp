@@ -45,19 +45,19 @@
 
 namespace ren {
 
-void registerAll(CPM_ES_CEREAL_NS::CerealCore& core)
+void registerAll(CPM_ES_ACORN_NS::Acorn& core)
 {
   // Systems
-  registerSystem_RenderSimpleGeom();
-  registerSystem_RenderFont();
-  registerSystem_ArcBallCameraMouse();
-  registerSystem_DebugRenderClickBox2D();
-  VBOMan::registerSystems();
-  IBOMan::registerSystems();
-  ShaderMan::registerSystems();
-  GeomMan::registerSystems();
-  TextureMan::registerSystems();
-  FontMan::registerSystems();
+  registerSystem_RenderSimpleGeom(core);
+  registerSystem_RenderFont(core);
+  registerSystem_ArcBallCameraMouse(core);
+  registerSystem_DebugRenderClickBox2D(core);
+  VBOMan::registerSystems(core);
+  IBOMan::registerSystems(core);
+  ShaderMan::registerSystems(core);
+  GeomMan::registerSystems(core);
+  TextureMan::registerSystems(core);
+  FontMan::registerSystems(core);
 
   // Components
   core.registerComponent<CommonUniforms>();
@@ -89,7 +89,7 @@ void registerAll(CPM_ES_CEREAL_NS::CerealCore& core)
   core.registerComponent<GeomPromise>();
 
   // Register utility systems
-  registerSystem_UtilViewPosAlign();
+  registerSystem_UtilViewPosAlign(core);
 
   // Register utility components
   core.registerComponent<UtilViewPosAlign>();

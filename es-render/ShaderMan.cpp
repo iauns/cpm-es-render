@@ -489,10 +489,10 @@ const char* ShaderMan::getGCName()
   return ShaderGarbageCollector::getName();
 }
 
-void ShaderMan::registerSystems()
+void ShaderMan::registerSystems(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<ShaderPromiseVFFulfillment>();
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<ShaderGarbageCollector>();
+  core.registerSystem<ShaderPromiseVFFulfillment>();
+  core.registerSystem<ShaderGarbageCollector>();
 }
 
 void ShaderMan::runGCCycle(CPM_ES_NS::ESCoreBase& core)

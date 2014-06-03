@@ -7,6 +7,7 @@
 #include <gl-shaders/GLShader.hpp>
 #include <entity-system/BaseSystem.hpp>
 #include <es-systems/SystemCore.hpp>
+#include <es-acorn/Acorn.hpp>
 
 #include "comp/AssetPromise.hpp"
 
@@ -72,7 +73,7 @@ public:
   /// Registers VBO managers systems. In this case, just the GC system.
   /// Other managers also have a promise system as well, which will fufill
   /// promises made to entities when assets are loaded from disk.
-  static void registerSystems();
+  static void registerSystems(CPM_ES_ACORN_NS::Acorn& core);
 
 private:
   friend class VBOGarbageCollector;

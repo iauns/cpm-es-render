@@ -2,6 +2,7 @@
 #include <gl-platform/GLPlatform.hpp>
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
+#include <es-acorn/Acorn.hpp>
 
 #include <es-general/comp/Transform.hpp>
 #include <es-general/comp/StaticGlobalTime.hpp>
@@ -189,9 +190,9 @@ public:
   }
 };
 
-void registerSystem_RenderFont()
+void registerSystem_RenderFont(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<RenderFontSys>();
+  core.registerSystem<RenderFontSys>();
 }
 
 const char* getSystemName_RenderFont()

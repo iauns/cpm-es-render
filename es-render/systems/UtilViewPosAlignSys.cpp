@@ -2,6 +2,7 @@
 #include <glm/gtx/transform.hpp>
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
+#include <es-acorn/Acorn.hpp>
 
 #include <es-general/comp/Transform.hpp>
 #include <es-general/comp/StaticCamera.hpp>
@@ -49,9 +50,9 @@ public:
   }
 };
 
-void registerSystem_UtilViewPosAlign()
+void registerSystem_UtilViewPosAlign(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<UtilViewPosAlignSys>();
+  core.registerSystem<UtilViewPosAlignSys>();
 }
 
 const char* getSystemName_UtilViewPosAlign()

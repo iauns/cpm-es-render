@@ -2,6 +2,7 @@
 #include <gl-platform/GLPlatform.hpp>
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
+#include <es-acorn/Acorn.hpp>
 
 #include <es-general/comp/Transform.hpp>
 #include <es-general/comp/StaticGlobalTime.hpp>
@@ -205,9 +206,9 @@ public:
   }
 };
 
-void registerSystem_RenderSimpleGeom()
+void registerSystem_RenderSimpleGeom(CPM_ES_ACORN_NS::Acorn& core)
 {
-  CPM_ES_SYSTEMS_NS::SystemCore::registerSystem<RenderSimpleGeomSys>();
+  core.registerSystem<RenderSimpleGeomSys>();
 }
 
 const char* getSystemName_RenderSimpleGeom()
