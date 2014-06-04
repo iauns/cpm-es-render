@@ -1,7 +1,7 @@
 #include <es-cereal/CerealHeap.hpp>
 #include <es-cereal/CerealCore.hpp>
 
-#include "camera.hpp"
+#include "Camera.hpp"
 
 namespace ren {
 
