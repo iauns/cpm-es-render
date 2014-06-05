@@ -25,6 +25,10 @@ public:
   {
     setup(vboID, shaderID, vboMan);
   }
+  ShaderVBOAttribs(GLuint vboID, GLuint shaderID, const VBOMan& vboMan)
+  {
+    setup(vboID, shaderID, vboMan);
+  }
 
   /// Bind pre-applied attributes setup with the 'setup' function.
   void bind()
@@ -53,6 +57,13 @@ public:
   /// applied before rendering.
   void setup(GLuint vboID, GLuint shaderID, const StaticVBOMan& vboMan)
   {
+    setup(vboID, shaderID, *vboMan.instance);
+  }
+
+  /// Sets up this class 'ShaderVBOAttribs' such that it attributes can be
+  /// applied before rendering.
+  void setup(GLuint vboID, GLuint shaderID, const VBOMan& vboMan)
+  {
     /// NOTE: If this statement proves to be a performance problem (because
     ///       we are looking up the shader's attributes using OpenGL), then
     ///       we can cache the attributes in the shader manager and import
@@ -63,7 +74,7 @@ public:
 
     // Lookup the VBO and its attributes by GL id.
     std::vector<CPM_GL_SHADERS_NS::ShaderAttribute> vboAttribs =
-        vboMan.instance->getVBOAttributes(vboID);
+        vboMan.getVBOAttributes(vboID);
 
     if (vboAttribs.size() < attribs.size())
     {
