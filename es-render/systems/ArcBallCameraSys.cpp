@@ -59,7 +59,7 @@ public:
 
         case gen::StaticMouseInput::MOUSE_WHEEL:
           // May need to calculate mouse wheel delta.
-          arcBall.arcLookAt.doZoom(it->mouseWheel);
+          arcBall.arcLookAt.doZoom(static_cast<float>(it->mouseWheel) * 0.05f);
           break;
 
         case gen::StaticMouseInput::MOUSE_UP:
