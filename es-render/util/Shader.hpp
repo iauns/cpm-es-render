@@ -31,7 +31,7 @@ public:
   }
 
   /// Bind pre-applied attributes setup with the 'setup' function.
-  void bind()
+  void bind() const
   {
     if (isSetup()) {
       CPM_GL_SHADERS_NS::bindPreappliedAttrib(mAppliedAttribs,
@@ -42,7 +42,7 @@ public:
   }
 
   /// Unbind pre-applied atttributes.
-  void unbind()
+  void unbind() const
   {
     if (isSetup()) {
       CPM_GL_SHADERS_NS::unbindPreappliedAttrib(mAppliedAttribs, 
@@ -94,7 +94,7 @@ public:
 
   /// Returns true if the shader and VBO attributes have been merged together
   /// into our appliedAttributes array.
-  bool isSetup()
+  bool isSetup() const
   {
     return (mAttribSize != -1);
   }
