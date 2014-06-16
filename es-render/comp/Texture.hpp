@@ -18,6 +18,7 @@ struct Texture
   int32_t         textureUnit;  ///< The texture unit this texture is bound to.
   GLint           uniformLocation;
   char            uniformName[MaxUniformName];
+  GLenum          textureType;
 
   // -- Functions --
   Texture()
@@ -26,6 +27,7 @@ struct Texture
     glid = 0;
     uniformLocation = -1;
     uniformName[0] = '\0';
+    textureType = GL_TEXTURE_2D;
   }
 
   static const char* getName() {return "ren:Texture";}

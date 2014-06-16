@@ -37,7 +37,7 @@ void Texture::applyUniform() const
   {
     // When rendering an object with this program.
     GL(glActiveTexture(GL_TEXTURE0 + static_cast<unsigned int>(textureUnit)));
-    GL(glBindTexture(GL_TEXTURE_2D, glid));
+    GL(glBindTexture(textureType, glid));
     GL(glUniform1i(uniformLocation, textureUnit));
   }
 }
