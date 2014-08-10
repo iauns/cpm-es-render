@@ -79,6 +79,7 @@ GLuint getColorLineShader(CPM_ES_CEREAL_NS::CerealCore& core)
   GLuint shaderID = shaderMan.getIDForAsset(colorLineShaderName);
   if (shaderID == 0)
   {
+#ifndef ION_GLSL4
     const char* vs =
         "uniform mat4 uProjIVObject;\n"
         "uniform vec4 uColor;\n"
@@ -102,6 +103,27 @@ GLuint getColorLineShader(CPM_ES_CEREAL_NS::CerealCore& core)
         "{\n"
         "  gl_FragColor = fColor;\n"
         "}\n";
+#else
+    const char* vs =
+        "#version 400\n"
+        "uniform mat4 uProjIVObject;\n"
+        "uniform vec4 uColor;\n"
+        "in vec3 aPos;\n"
+        "out vec4 fColor;\n"
+        "void main()\n"
+        "{\n"
+        "  gl_Position = uProjIVObject * vec4(aPos, 1.0);\n"
+        "  fColor = uColor;\n"
+        "}\n";
+    const char* fs =
+        "#version 400\n"
+        "in vec4 fColor;\n"
+        "out vec4 FragColor;\n"
+        "void main()\n"
+        "{\n"
+        "  FragColor = fColor;\n"
+        "}\n";
+#endif
 
     shaderID = shaderMan.addInMemoryVSFS(vs, fs, colorLineShaderName);
   }
