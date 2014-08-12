@@ -60,34 +60,10 @@ void registerAll(CPM_ES_ACORN_NS::Acorn& core)
   FontMan::registerSystems(core);
 
   // Components
-  core.registerComponent<CommonUniforms>();
-  core.registerComponent<GLState>();
-  core.registerComponent<IBO>();
-  core.registerComponent<MatUniform>();
-  core.registerComponent<RenderSequence>();
-  core.registerComponent<Shader>();
-  core.registerComponent<ShaderPromiseVF>();
-  core.registerComponent<RenderSimpleGeom>();
-  core.registerComponent<SkinnedGeom>();
-  core.registerComponent<StaticArcBallCam>();
-  core.registerComponent<StaticGLState>();
-  core.registerComponent<StaticShaderMan>();
-  core.registerComponent<StaticGeomMan>();
-  core.registerComponent<StaticTextureMan>();
-  core.registerComponent<StaticVBOMan>();
-  core.registerComponent<StaticIBOMan>();
-  core.registerComponent<StaticFontMan>();
-  core.registerComponent<Font>();
-  core.registerComponent<FontPromise>();
-  core.registerComponent<RenderFont>();
-  core.registerComponent<Texture>();
-  core.registerComponent<TexturePromise>();
-  core.registerComponent<UniformLocation>();
-  core.registerComponent<VBO>();
-  core.registerComponent<VecUniform>();
-  core.registerComponent<Geom>();
-  core.registerComponent<GeomPromise>();
-
+  register1(core);
+  register2(core);
+  register3(core);
+  
   // Register utility systems
   registerSystem_UtilViewPosAlign(core);
 
