@@ -1,6 +1,7 @@
 
 #include <set>
 #include <stdexcept>
+#include <string>
 
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
