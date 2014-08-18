@@ -33,16 +33,17 @@
 
 namespace ren {
 
-  void register2(CPM_ES_ACORN_NS::Acorn& core)
+  void register1(CPM_ES_ACORN_NS::Acorn& core)
   {
-    core.registerComponent<StaticArcBallCam>();
-    core.registerComponent<StaticGLState>();
-    core.registerComponent<StaticShaderMan>();
-    core.registerComponent<StaticGeomMan>();
-    core.registerComponent<StaticTextureMan>();
-    core.registerComponent<StaticVBOMan>();
-    core.registerComponent<StaticIBOMan>();
-    core.registerComponent<StaticFontMan>();
+    core.registerComponent<CommonUniforms>();
+    core.registerComponent<GLState>();
+    core.registerComponent<IBO>();
+    core.registerComponent<MatUniform>();
+    core.registerComponent<RenderSequence>();
+    core.registerComponent<Shader>();
+    core.registerComponent<ShaderPromiseVF>();
+    core.registerComponent<RenderSimpleGeom>();
+    core.registerComponent<SkinnedGeom>();
   }
 
 } // namespace ren
