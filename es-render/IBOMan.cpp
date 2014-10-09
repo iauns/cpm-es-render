@@ -87,7 +87,7 @@ void IBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
     // current id along the way.
     while (it != mIBOData.end() && it->first < id)
     {
-      std::cout << "IBO GC: " << it->second.assetName << std::endl;
+      //\cb std::cout << "IBO GC: " << it->second.assetName << std::endl;
 
       GLuint idToErase = it->first;
       mIBOData.erase(it++);
@@ -115,7 +115,7 @@ void IBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
 
   while (it != mIBOData.end())
   {
-    std::cout << "IBO GC: " << it->second.assetName << std::endl;
+    //\cb std::cout << "IBO GC: " << it->second.assetName << std::endl;
 
     GLuint idToErase = it->first;
     mIBOData.erase(it++);
@@ -123,7 +123,7 @@ void IBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
   }
 }
 
-class IBOGarbageCollector : 
+class IBOGarbageCollector :
     public es::GenericSystem<false, IBO>
 {
 public:
