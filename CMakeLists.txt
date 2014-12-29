@@ -36,33 +36,33 @@ endif()
 # ++ MODULE: Entity System
 CPM_AddModule("es"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-entity-system"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   USE_EXISTING_VER TRUE
   EXPORT_MODULE TRUE)
 
 # ++ MODULE: ES Acorn
 CPM_AddModule("es_acorn"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-es-acorn"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   USE_EXISTING_VER TRUE
   EXPORT_MODULE TRUE)
 
 # ++ MODULE: ES Systems
 CPM_AddModule("es_systems"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-es-systems"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   USE_EXISTING_VER TRUE)
 
 # ++ MODULE: Async filesystem support
 CPM_AddModule("es_fs"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-es-fs"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   USE_EXISTING_VER TRUE)
 
 # ++ MODULE: General transforms and components
 CPM_AddModule("es_general"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-es-general"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   USE_EXISTING_VER TRUE)
 
 # ++ MODULE: Cereal support for serializing GLM.
@@ -81,13 +81,13 @@ CPM_AddModule("glm"
 # ++ MODULE: GL shader management
 CPM_AddModule("gl_shaders"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-gl-shaders"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   EXPORT_MODULE TRUE)
 
 # ++ MODULE: GL State
 CPM_AddModule("gl_state"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-gl-state.git"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   EXPORT_MODULE TRUE)
 
 # ++ MODULE: Lodepng png loading library.
@@ -104,13 +104,13 @@ CPM_AddModule("bserialize"
 # ++ MODULE: Arc-Look-At (Autoview Camera)
 CPM_AddModule("look_at"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-arc-look-at"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   EXPORT_MODULE TRUE)
 
 # ++ MODULE: var buffer - for generating VBO buffers
 CPM_AddModule("var_buffer"
   GIT_REPOSITORY "https://github.com/CIBC-Internal/cpm-var-buffer"
-  GIT_TAG "origin/master"
+  GIT_TAG "origin/SCIRun"
   EXPORT_MODULE TRUE)
 
 # I don't want more than one version of this module running around.
