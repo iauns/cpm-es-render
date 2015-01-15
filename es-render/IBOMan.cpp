@@ -45,6 +45,14 @@ GLuint IBOMan::addInMemoryIBO(void* iboData, size_t iboDataSize, GLenum primMode
   return glid;
 }
 
+void IBOMan::removeInMemoryIBO(GLuint glid)
+{
+  auto iter =  mIBOData.find(glid);
+  mIBOData.erase(iter);
+
+  GL(glDeleteBuffers(1, &glid));
+}
+
 GLuint IBOMan::hasIBO(const std::string& assetName) const
 {
   for (auto it = mIBOData.begin(); it != mIBOData.end(); ++it)
