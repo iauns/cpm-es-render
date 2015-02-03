@@ -27,6 +27,8 @@ struct CommonUniforms
     CAM_UP,                               // uCamUp         - 'Up' vector for the camera in world space
     CAM_POS,                              // uCamPos        - Camera position in world space.
     GLOBAL_TIME,                          // uGlobalTime    - Global time of the game. Used for animation.
+    ASPECT_RATIO,                         // uAspectRatio   - The window aspect ratio
+    WINDOW_WIDTH,                         // uWindowWidth   - The window's width
     UNIFORM_NONE,
   };
 

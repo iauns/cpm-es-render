@@ -28,6 +28,8 @@ void CommonUniforms::checkUniformArray(GLuint shaderID)
     else if (uniform.nameInCode == "uCamUp")        foundUniform = CAM_UP;
     else if (uniform.nameInCode == "uCamPos")       foundUniform = CAM_POS;
     else if (uniform.nameInCode == "uGlobalTime")   foundUniform = GLOBAL_TIME;
+    else if (uniform.nameInCode == "uAspectRatio")   foundUniform = ASPECT_RATIO;
+    else if (uniform.nameInCode == "uWindowWidth")   foundUniform = WINDOW_WIDTH;
 
     if (foundUniform != UNIFORM_NONE)
     {
@@ -92,7 +94,7 @@ void CommonUniforms::applyCommonUniforms(const glm::mat4& objectToWorld,
           GL(glUniformMatrix4fv(uniformLocation[i], 1, false, ptr));
           break;
         }
-
+        
       case CAM_VIEW_VEC:
         {
           glm::mat4 view = cam.getView();
@@ -127,6 +129,20 @@ void CommonUniforms::applyCommonUniforms(const glm::mat4& objectToWorld,
           glm::mat4 view = cam.getView();
           glm::vec3 pos(view[3].x, view[3].y, view[3].z);
           GL(glUniform3f(uniformLocation[i], pos.x, pos.y, pos.z));
+        }
+        break;
+
+      case ASPECT_RATIO:
+        {
+          float aspect = cam.aspect;
+          GL(glUniform1f(uniformLocation[i], aspect));
+        }
+        break;
+        
+      case WINDOW_WIDTH:
+        {
+          float width = cam.winWidth;
+          GL(glUniform1f(uniformLocation[i], width));
         }
         break;
 
