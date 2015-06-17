@@ -27,6 +27,8 @@ public:
                         GLenum primType, GLsizei numPrims,
                         const std::string& assetName);
 
+  void removeInMemoryIBO(GLuint glid);
+
   /// Returns glid if \p assetName is in the VBO man. Returns 0 otherwise.
   /// Use sparingly.
   GLuint hasIBO(const std::string& assetName) const;

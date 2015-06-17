@@ -9,13 +9,13 @@ namespace ren {
 
 struct StaticGeomMan
 {
-  // -- Data --
-  std::unique_ptr<GeomMan> instance;
+    // -- Data --
+    GeomMan *instance_;
 
-  // -- Functions --
-  StaticGeomMan() : instance(new GeomMan) {}
-  StaticGeomMan(const StaticGeomMan&) : instance(new GeomMan) {}
-  StaticGeomMan(StaticGeomMan&& o) : instance(std::move(o.instance)) {}
+    // -- Functions --
+    StaticGeomMan() : instance_(new GeomMan) {}
+    StaticGeomMan(GeomMan* s) : instance_(s) {}
+
 
   // This assignment operator is only used during modification calls inside
   // of the entity system. We don't care about those calls as they won't

@@ -10,12 +10,11 @@ namespace ren {
 struct StaticFontMan
 {
   // -- Data --
-  std::unique_ptr<FontMan> instance;
+  FontMan* instance_;
 
   // -- Functions --
-  StaticFontMan() : instance(new FontMan) {}
-  StaticFontMan(const StaticFontMan&) : instance(new FontMan) {}
-  StaticFontMan(StaticFontMan&& o) : instance(std::move(o.instance)) {}
+  StaticFontMan() : instance_(new FontMan) {}
+  StaticFontMan(FontMan* o) : instance_(o) {}
 
   // This assignment operator is only used during modification calls inside
   // of the entity system. We don't care about those calls as they won't

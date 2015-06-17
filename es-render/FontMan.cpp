@@ -185,7 +185,7 @@ bool FontMan::buildComponent(CPM_ES_CEREAL_NS::CerealCore& core, uint64_t entity
       rootAssetName = assetName.substr(0, slashIdx + 1);
     }
 
-    TextureMan& texMan = *core.getStaticComponent<StaticTextureMan>()->instance;
+    TextureMan* texMan = core.getStaticComponent<StaticTextureMan>()->instance_;
     const FontMan::FontInfo& info = getFontInfo(id);
     const BMFont::PageBlock& pageBlock = info.fontInfo.getPageBlock();
     for (size_t i = 0; i < pageBlock.pages.size(); ++i)
@@ -205,7 +205,7 @@ bool FontMan::buildComponent(CPM_ES_CEREAL_NS::CerealCore& core, uint64_t entity
 
       std::stringstream ss;
       ss << "uTX" << i;
-      texMan.loadTexture(core, entityID, textureName, static_cast<int32_t>(i), ss.str());
+      texMan->loadTexture(core, entityID, textureName, static_cast<int32_t>(i), ss.str());
     }
 
     return true;
@@ -252,8 +252,8 @@ public:
       std::cerr << "Unable to complete font fulfillment. There is no StaticFontMan." << std::endl;
       return;
     }
-    FontMan& fontMan = *man->instance;
-    fontMan.mNewUnfulfilledAssets = false;
+    FontMan* fontMan = man->instance_;
+    fontMan->mNewUnfulfilledAssets = false;
 
     if (mAssetsAwaitingRequest.size() > 0)
     {
@@ -266,7 +266,7 @@ public:
 
       for (const std::string& asset : assetsWithNoRequest)
       {
-        fontMan.requestFont(core, asset, fontMan.mNumRetries);
+        fontMan->requestFont(core, asset, fontMan->mNumRetries);
       }
     }
   }
@@ -275,7 +275,7 @@ public:
                const es::ComponentGroup<FontPromise>& promisesGroup,
                const es::ComponentGroup<StaticFontMan>& fontManGroup) override
   {
-    FontMan& fontMan = *fontManGroup.front().instance;
+    FontMan* fontMan = fontManGroup.front().instance_;
 
     CPM_ES_CEREAL_NS::CerealCore* ourCorePtr = dynamic_cast<CPM_ES_CEREAL_NS::CerealCore*>(&core);
     if (ourCorePtr == nullptr)
@@ -291,7 +291,7 @@ public:
       // Check to see if this promise has been fulfilled. If it has, then
       // remove it and create the appropriate component for the indicated
       // entity.
-      if (fontMan.buildComponent(ourCore, entityID, p.assetName))
+      if (fontMan->buildComponent(ourCore, entityID, p.assetName))
       {
         // Remove this promise, and add a font component to this promises'
         // entityID. It is safe to remove components while we are using a
@@ -406,9 +406,9 @@ public:
       std::cerr << "Unable to complete texture garbage collection. There is no StaticFontMan." << std::endl;
       return;
     }
-    FontMan& texMan = *man->instance;
+    FontMan* texMan = man->instance_;
 
-    texMan.runGCAgainstVaidIDs(mValidKeys);
+    texMan->runGCAgainstVaidIDs(mValidKeys);
     mValidKeys.clear();
   }
 

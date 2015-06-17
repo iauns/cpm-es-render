@@ -78,7 +78,7 @@ void RenderFont::constructFontGeometry(const StaticFontMan& fontMan, uint64_t fo
   // advanced functionality if we want to supporta wider range of characters.
 
   // Obtain BMFont info using fontID and fontMan
-  const BMFont& fontInfo = fontMan.instance->getBMFontInfo(fontID);
+  const BMFont& fontInfo = fontMan.instance_->getBMFontInfo(fontID);
 
   /// \todo We will have to move a number of functions into BMFont itself.
   ///       functions such as detecting the length of a line, or finding

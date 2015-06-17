@@ -423,8 +423,8 @@ public:
       std::cerr << "Unable to complete texture fulfillment. There is no StaticTextureMan." << std::endl;
       return;
     }
-    TextureMan& textureMan = *man->instance;
-    textureMan.mNewUnfulfilledAssets = false;
+    TextureMan* textureMan = man->instance_;
+    textureMan->mNewUnfulfilledAssets = false;
 
     if (mAssetsAwaitingRequest.size() > 0)
     {
@@ -437,7 +437,7 @@ public:
 
       for (const std::string& asset : assetsWithNoRequest)
       {
-        textureMan.requestTexture(core, asset, textureMan.mNumRetries);
+        textureMan->requestTexture(core, asset, textureMan->mNumRetries);
       }
     }
   }
@@ -446,7 +446,7 @@ public:
                const es::ComponentGroup<TexturePromise>& promisesGroup,
                const es::ComponentGroup<StaticTextureMan>& textureManGroup) override
   {
-    TextureMan& textureMan = *textureManGroup.front().instance;
+    TextureMan* textureMan = textureManGroup.front().instance_;
 
     CPM_ES_CEREAL_NS::CerealCore* ourCorePtr = dynamic_cast<CPM_ES_CEREAL_NS::CerealCore*>(&core);
     if (ourCorePtr == nullptr)
@@ -459,7 +459,7 @@ public:
     int index = 0;
     for (const TexturePromise& p : promisesGroup)
     {
-      if (textureMan.buildComponent(ourCore, entityID, p.assetName, p.textureUnit, p.uniformName))
+      if (textureMan->buildComponent(ourCore, entityID, p.assetName, p.textureUnit, p.uniformName))
       {
         // Remove this promise, and add a texture component to this promises'
         // entityID. It is safe to remove components while we are using a
@@ -592,9 +592,9 @@ public:
       std::cerr << "Unable to complete texture garbage collection. There is no StaticTextureMan." << std::endl;
       return;
     }
-    TextureMan& texMan = *man->instance;
+    TextureMan* texMan = man->instance_;
 
-    texMan.runGCAgainstVaidIDs(mValidKeys);
+    texMan->runGCAgainstVaidIDs(mValidKeys);
     mValidKeys.clear();
   }
 

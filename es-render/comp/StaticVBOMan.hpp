@@ -12,13 +12,10 @@ class VBOMan;
 struct StaticVBOMan
 {
   // -- Data --
-  std::unique_ptr<VBOMan> instance;
-
+  VBOMan * instance_;
   // -- Functions --
-  StaticVBOMan() : instance(new VBOMan) {}
-  StaticVBOMan(const StaticVBOMan&) : instance(new VBOMan) {}
-  StaticVBOMan(StaticVBOMan&& o) : instance(std::move(o.instance)) {}
-  StaticVBOMan& operator=(const StaticVBOMan&) {return *this;}
+  StaticVBOMan() : instance_(new VBOMan) {}
+  StaticVBOMan(VBOMan * v) : instance_(v) {}
 
   static const char* getName() {return "ren:StaticVBOMan";}
 

@@ -1,6 +1,7 @@
 
 #include <set>
 #include <stdexcept>
+#include <string>
 
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
@@ -42,6 +43,14 @@ GLuint IBOMan::addInMemoryIBO(void* iboData, size_t iboDataSize, GLenum primMode
   mIBOData.insert(std::make_pair(glid, IBOData(assetName, primMode, primType, numPrims)));
 
   return glid;
+}
+
+void IBOMan::removeInMemoryIBO(GLuint glid)
+{
+  auto iter =  mIBOData.find(glid);
+  mIBOData.erase(iter);
+
+  GL(glDeleteBuffers(1, &glid));
 }
 
 GLuint IBOMan::hasIBO(const std::string& assetName) const
@@ -86,7 +95,7 @@ void IBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
     // current id along the way.
     while (it != mIBOData.end() && it->first < id)
     {
-      std::cout << "IBO GC: " << it->second.assetName << std::endl;
+      //\cb std::cout << "IBO GC: " << it->second.assetName << std::endl;
 
       GLuint idToErase = it->first;
       mIBOData.erase(it++);
@@ -114,7 +123,7 @@ void IBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
 
   while (it != mIBOData.end())
   {
-    std::cout << "IBO GC: " << it->second.assetName << std::endl;
+    //\cb std::cout << "IBO GC: " << it->second.assetName << std::endl;
 
     GLuint idToErase = it->first;
     mIBOData.erase(it++);
@@ -122,7 +131,7 @@ void IBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
   }
 }
 
-class IBOGarbageCollector : 
+class IBOGarbageCollector :
     public es::GenericSystem<false, IBO>
 {
 public:
@@ -134,10 +143,10 @@ public:
   void preWalkComponents(es::ESCoreBase&) {mValidKeys.clear();}
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticIBOMan* man = core.getStaticComponent<StaticIBOMan>();
+    IBOMan* man = core.getStaticComponent<StaticIBOMan>()->instance_;
     if (man != nullptr)
     {
-      man->instance->runGCAgainstVaidIDs(mValidKeys);
+      man->runGCAgainstVaidIDs(mValidKeys);
       mValidKeys.clear();
     }
     else

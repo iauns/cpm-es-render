@@ -1,6 +1,7 @@
 
 #include <set>
 #include <stdexcept>
+#include <string>
 
 #include <entity-system/GenericSystem.hpp>
 #include <es-systems/SystemCore.hpp>
@@ -99,7 +100,7 @@ GLuint VBOMan::addInMemoryVBO(void* vboData, size_t vboDataSize,
   // Setup the VBO from the data given.
   GL(glGenBuffers(1, &glid));
   GL(glBindBuffer(GL_ARRAY_BUFFER, glid));
-  GL(glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vboDataSize), 
+  GL(glBufferData(GL_ARRAY_BUFFER, static_cast<GLsizeiptr>(vboDataSize),
                   vboData, GL_STATIC_DRAW));
 
   addVBOAttributes(glid, attribs, assetName);
@@ -124,7 +125,7 @@ void VBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
     // current id along the way.
     while (it != mVBOData.end() && it->first < id)
     {
-      std::cout << "VBO GC: " << it->second.assetName << std::endl;
+      //\cb std::cout << "VBO GC: " << it->second.assetName << std::endl;
 
       GLuint idToErase = it->first;
       mVBOData.erase(it++);
@@ -152,7 +153,7 @@ void VBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
 
   while (it != mVBOData.end())
   {
-    std::cout << "VBO GC: " << it->second.assetName << std::endl;
+    //\cb std::cout << "VBO GC: " << it->second.assetName << std::endl;
 
     GLuint idToErase = it->first;
     mVBOData.erase(it++);
@@ -160,7 +161,7 @@ void VBOMan::runGCAgainstVaidIDs(const std::set<GLuint>& validKeys)
   }
 }
 
-class VBOGarbageCollector : 
+class VBOGarbageCollector :
     public es::GenericSystem<false, VBO>
 {
 public:
@@ -173,10 +174,10 @@ public:
 
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticVBOMan* man = core.getStaticComponent<StaticVBOMan>();
+    VBOMan* man = core.getStaticComponent<StaticVBOMan>()->instance_;
     if (man != nullptr)
     {
-      man->instance->runGCAgainstVaidIDs(mValidKeys);
+      man->runGCAgainstVaidIDs(mValidKeys);
       mValidKeys.clear();
     }
     else

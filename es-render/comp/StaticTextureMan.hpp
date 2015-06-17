@@ -10,12 +10,11 @@ namespace ren {
 struct StaticTextureMan
 {
   // -- Data --
-  std::unique_ptr<TextureMan> instance;
+  TextureMan* instance_;
 
   // -- Functions --
-  StaticTextureMan() : instance(new TextureMan) {}
-  StaticTextureMan(const StaticTextureMan&) : instance(new TextureMan) {}
-  StaticTextureMan(StaticTextureMan&& o) : instance(std::move(o.instance)) {}
+  StaticTextureMan() : instance_(new TextureMan) {}
+  StaticTextureMan(TextureMan* o) : instance_(o) {}
 
   // This assignment operator is only used during modification calls inside
   // of the entity system. We don't care about those calls as they won't

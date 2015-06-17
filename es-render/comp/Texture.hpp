@@ -79,10 +79,10 @@ struct Texture
       CPM_ES_CEREAL_NS::CerealCore& core 
           = dynamic_cast<CPM_ES_CEREAL_NS::CerealCore&>(s.getCore());
       StaticTextureMan* staticTX = core.getStaticComponent<StaticTextureMan>();
-      TextureMan& texMan = *staticTX->instance;
+      TextureMan* texMan = staticTX->instance_;
 
       // Find the asset name associated with our glid and serialize it out.
-      std::string assetName = texMan.getAssetFromID(glid);
+      std::string assetName = texMan->getAssetFromID(glid);
       s.serialize("name", assetName);
       s.serialize("unit", textureUnit);
 

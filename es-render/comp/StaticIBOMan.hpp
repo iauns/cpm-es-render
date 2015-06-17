@@ -10,14 +10,10 @@ namespace ren {
 struct StaticIBOMan
 {
   // -- Data --
-  std::unique_ptr<IBOMan> instance;
-
+  IBOMan * instance_;
   // -- Functions --
-  StaticIBOMan() : instance(new IBOMan) {}
-  StaticIBOMan(const StaticIBOMan&) : instance(new IBOMan) {}
-  StaticIBOMan(StaticIBOMan&& o) : instance(std::move(o.instance)) {}
-  StaticIBOMan& operator=(const StaticIBOMan&) {return *this;}
-
+  StaticIBOMan() : instance_(new IBOMan) {}
+  StaticIBOMan(IBOMan * v) : instance_(v) {}
   static const char* getName() {return "ren:StaticIBOMan";}
 
   bool serialize(CPM_ES_CEREAL_NS::ComponentSerialize& /* s */, uint64_t /* entityID */)
