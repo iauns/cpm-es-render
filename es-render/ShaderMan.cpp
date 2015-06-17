@@ -297,14 +297,13 @@ public:
 
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticShaderMan* man = core.getStaticComponent<StaticShaderMan>();
+    ShaderMan* man = core.getStaticComponent<StaticShaderMan>()->instance_;
     if (man == nullptr)
     {
-      std::cerr << "Unable to complete shader fulfillment. There is no StaticShaderMan." << std::endl;
+      std::cerr << "Unable to complete shader fulfillment. There is no ShaderMan." << std::endl;
       return;
     }
-    ShaderMan& shaderMan = *man->instance;
-    shaderMan.mNewUnfulfilledAssets = false;
+    man->mNewUnfulfilledAssets = false;
 
     if (mAssetsAwaitingRequest.size() > 0)
     {
@@ -317,7 +316,7 @@ public:
 
       for (const std::string& asset : assetsWithNoRequest)
       {
-        shaderMan.requestVSandFS(core, asset, shaderMan.mNumRetries);
+        man->requestVSandFS(core, asset, man->mNumRetries);
       }
     }
   }
@@ -326,7 +325,7 @@ public:
                const es::ComponentGroup<ShaderPromiseVF>& promisesGroup,
                const es::ComponentGroup<StaticShaderMan>& shaderManGroup) override
   {
-    ShaderMan& shaderMan = *shaderManGroup.front().instance;
+    ShaderMan* shaderMan = shaderManGroup.front().instance_;
 
     CPM_ES_CEREAL_NS::CerealCore* ourCorePtr = dynamic_cast<CPM_ES_CEREAL_NS::CerealCore*>(&core);
     if (ourCorePtr == nullptr)
@@ -342,7 +341,7 @@ public:
       // Check to see if this promise has been fulfilled. If it has, then
       // remove it and create the appropriate component for the indicated
       // entity.
-      if (shaderMan.buildComponent(ourCore, entityID, p.assetName))
+      if (shaderMan->buildComponent(ourCore, entityID, p.assetName))
       {
         // Remove this promise, and add a shader component to this promises'
         // entityID. It is safe to remove components while we are using a
@@ -466,15 +465,13 @@ public:
 
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticShaderMan* man = core.getStaticComponent<StaticShaderMan>();
+    ShaderMan* man = core.getStaticComponent<StaticShaderMan>()->instance_;
     if (man == nullptr)
     {
-      std::cerr << "Unable to complete shader garbage collection. There is no StaticShaderMan." << std::endl;
+      std::cerr << "Unable to complete shader garbage collection. There is no ShaderMan." << std::endl;
       return;
     }
-    ShaderMan& shaderMan = *man->instance;
-
-    shaderMan.runGCAgainstVaidIDs(mValidKeys);
+    man->runGCAgainstVaidIDs(mValidKeys);
     mValidKeys.clear();
   }
 

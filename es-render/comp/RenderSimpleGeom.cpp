@@ -20,7 +20,7 @@ void RenderSimpleGeom::checkAttribArray(GLuint vboID, GLuint shaderID,
 
     // Lookup the VBO and its attributes by GL id.
     std::vector<CPM_GL_SHADERS_NS::ShaderAttribute> vboAttribs =
-        vboMan.instance->getVBOAttributes(vboID);
+        vboMan.instance_->getVBOAttributes(vboID);
 
     if (vboAttribs.size() < attribs.size())
     {

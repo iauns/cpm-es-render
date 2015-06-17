@@ -57,7 +57,7 @@ public:
   /// applied before rendering.
   void setup(GLuint vboID, GLuint shaderID, const StaticVBOMan& vboMan)
   {
-    setup(vboID, shaderID, *vboMan.instance);
+    setup(vboID, shaderID, *(vboMan.instance_));
   }
 
   /// Sets up this class 'ShaderVBOAttribs' such that it attributes can be

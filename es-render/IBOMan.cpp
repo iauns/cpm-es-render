@@ -143,10 +143,10 @@ public:
   void preWalkComponents(es::ESCoreBase&) {mValidKeys.clear();}
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticIBOMan* man = core.getStaticComponent<StaticIBOMan>();
+    IBOMan* man = core.getStaticComponent<StaticIBOMan>()->instance_;
     if (man != nullptr)
     {
-      man->instance->runGCAgainstVaidIDs(mValidKeys);
+      man->runGCAgainstVaidIDs(mValidKeys);
       mValidKeys.clear();
     }
     else

@@ -138,8 +138,8 @@ void GeomMan::loadAssetCB(const std::string& assetName, bool error,
         geom.textures.emplace_back(texName, samplerName, texUnit);
       }
 
-      VBOMan& vboMan = *core.getStaticComponent<StaticVBOMan>()->instance;
-      IBOMan& iboMan = *core.getStaticComponent<StaticIBOMan>()->instance;
+      VBOMan* vboMan = core.getStaticComponent<StaticVBOMan>()->instance_;
+      IBOMan* iboMan = core.getStaticComponent<StaticIBOMan>()->instance_;
       Tny* meshRoot = Tny_get(doc, "meshes")->value.tny;
       // A number of meshes doesn't make any sense since we select on the asset
       // name in the IBO and VBO.
@@ -176,9 +176,9 @@ void GeomMan::loadAssetCB(const std::string& assetName, bool error,
 
         // Retrieve and install binary data.
         Tny* vboData = Tny_get(meshDict, "vbo");
-        GLuint vboID = vboMan.hasVBO(assetName);
+        GLuint vboID = vboMan->hasVBO(assetName);
         if (vboID == 0)
-          vboID = vboMan.addInMemoryVBO(vboData->value.ptr, vboData->size, attribs, assetName);
+          vboID = vboMan->addInMemoryVBO(vboData->value.ptr, vboData->size, attribs, assetName);
 
         if (vboID == 0)
         {
@@ -187,9 +187,9 @@ void GeomMan::loadAssetCB(const std::string& assetName, bool error,
 
         // Retrieve and create ibo (if not already created).
         Tny* iboData = Tny_get(meshDict, "ibo");
-        GLuint iboID = iboMan.hasIBO(assetName);
+        GLuint iboID = iboMan->hasIBO(assetName);
         if (iboID == 0)
-          iboID = iboMan.addInMemoryIBO(iboData->value.ptr, iboData->size,
+          iboID = iboMan->addInMemoryIBO(iboData->value.ptr, iboData->size,
                                         GL_TRIANGLES, GL_UNSIGNED_SHORT, 
                                         iboData->size / sizeof(uint16_t), assetName);
 
@@ -264,19 +264,19 @@ bool GeomMan::buildComponent(CPM_ES_CEREAL_NS::CerealCore& core,
     component.setAssetName(assetName.c_str());
     core.addComponent(entityID, component);
 
-    VBOMan& vboMan = *core.getStaticComponent<StaticVBOMan>()->instance;
-    IBOMan& iboMan = *core.getStaticComponent<StaticIBOMan>()->instance;
+    VBOMan* vboMan = core.getStaticComponent<StaticVBOMan>()->instance_;
+    IBOMan* iboMan = core.getStaticComponent<StaticIBOMan>()->instance_;
 
     // VBO and IBO
     ren::VBO vbo;
-    vbo.glid = vboMan.hasVBO(assetName);
+    vbo.glid = vboMan->hasVBO(assetName);
     if (vbo.glid == 0)
     {
       std::cerr << "GeomMan: Failed VBO promise. No VBO present." << std::endl;
     }
 
     ren::IBO ibo;
-    ibo.glid = iboMan.hasIBO(assetName);
+    ibo.glid = iboMan->hasIBO(assetName);
     if (ibo.glid == 0)
     {
       std::cerr << "GeomMan: Failed VBO promise. No VBO present." << std::endl;
@@ -287,7 +287,7 @@ bool GeomMan::buildComponent(CPM_ES_CEREAL_NS::CerealCore& core,
       core.addComponent(entityID, vbo);
 
       // Retrieve IBO data.
-      const IBOMan::IBOData& data = iboMan.getIBOData(assetName);
+      const IBOMan::IBOData& data = iboMan->getIBOData(assetName);
       ibo.primMode = data.primMode;
       ibo.primType = data.primType;
       ibo.numPrims = data.numPrims;
@@ -299,14 +299,14 @@ bool GeomMan::buildComponent(CPM_ES_CEREAL_NS::CerealCore& core,
     {
       const GeomMan::GeomItem& geomItem = geomAsset->second;
       // Shader (will be loaded if necessary).
-      ShaderMan& shaderMan = *core.getStaticComponent<StaticShaderMan>()->instance;
-      shaderMan.loadVertexAndFragmentShader(core, entityID, geomItem.shaderName);
+      ShaderMan* shaderMan = core.getStaticComponent<StaticShaderMan>()->instance_;
+      shaderMan->loadVertexAndFragmentShader(core, entityID, geomItem.shaderName);
 
       // Textures (will be loaded if necessary).
-      TextureMan& texMan = *core.getStaticComponent<StaticTextureMan>()->instance;
+      TextureMan* texMan = core.getStaticComponent<StaticTextureMan>()->instance_;
       for (const GeomMan::GeomItem::TextureItem& texItem : geomItem.textures)
       {
-        texMan.loadTexture(core, entityID, texItem.name, 
+        texMan->loadTexture(core, entityID, texItem.name,
                            static_cast<int32_t>(texItem.textureUnit),
                            texItem.samplerName);
       }
@@ -354,14 +354,12 @@ public:
 
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticGeomMan* man = core.getStaticComponent<StaticGeomMan>();
+    GeomMan* man = core.getStaticComponent<StaticGeomMan>()->instance_;
     if (man == nullptr)
     {
       std::cerr << "Unable to complete geom fulfillment. There is no StaticGeomMan." << std::endl;
       return;
     }
-    GeomMan& geomMan = *man->instance;
-
     if (mAssetsAwaitingRequest.size() > 0)
     {
       std::set<std::string> assetsWithNoRequest;
@@ -373,7 +371,7 @@ public:
 
       for (const std::string& asset : assetsWithNoRequest)
       {
-        geomMan.requestAsset(core, asset, geomMan.mNumRetries);
+        man->requestAsset(core, asset, man->mNumRetries);
       }
     }
   }
@@ -382,7 +380,7 @@ public:
                const es::ComponentGroup<GeomPromise>& promisesGroup,
                const es::ComponentGroup<StaticGeomMan>& geomManGroup) override
   {
-    GeomMan& geomMan = *geomManGroup.front().instance;
+    GeomMan* geomMan = geomManGroup.front().instance_;
 
     CPM_ES_CEREAL_NS::CerealCore* ourCorePtr = dynamic_cast<CPM_ES_CEREAL_NS::CerealCore*>(&core);
     if (ourCorePtr == nullptr)
@@ -398,7 +396,7 @@ public:
       // Check to see if this promise has been fulfilled. If it has, then
       // remove it and create the appropriate component for the indicated
       // entity.
-      if (geomMan.buildComponent(ourCore, entityID, p.assetName))
+      if (geomMan->buildComponent(ourCore, entityID, p.assetName))
       {
         // Remove this promise, and add a geom component to this promises'
         // entityID. It is safe to remove components while we are using a
@@ -507,15 +505,13 @@ public:
 
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticGeomMan* man = core.getStaticComponent<StaticGeomMan>();
+    GeomMan* man = core.getStaticComponent<StaticGeomMan>()->instance_;
     if (man == nullptr)
     {
       std::cerr << "Unable to complete geom garbage collection. There is no StaticGeomMan." << std::endl;
       return;
     }
-    GeomMan& geomMan = *man->instance;
-
-    geomMan.runGCAgainstVaidNames(mValidKeys);
+    man->runGCAgainstVaidNames(mValidKeys);
     mValidKeys.clear();
   }
 

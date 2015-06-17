@@ -12,12 +12,12 @@ namespace ren {
 
 std::pair<ren::VBO, ren::IBO> getLineUnitSquare(CPM_ES_CEREAL_NS::CerealCore& core)
 {
-  ren::VBOMan& vboMan = *core.getStaticComponent<ren::StaticVBOMan>()->instance;
-  ren::IBOMan& iboMan = *core.getStaticComponent<ren::StaticIBOMan>()->instance;
+  ren::VBOMan* vboMan = core.getStaticComponent<ren::StaticVBOMan>()->instance_;
+  ren::IBOMan* iboMan = core.getStaticComponent<ren::StaticIBOMan>()->instance_;
 
   const std::string assetName = "_g_usqline";
 
-  GLuint vbo = vboMan.hasVBO(assetName);
+  GLuint vbo = vboMan->hasVBO(assetName);
   if (vbo == 0)
   {
     // Build the vertex buffer object and add it to the vbo manager.
@@ -34,7 +34,7 @@ std::pair<ren::VBO, ren::IBO> getLineUnitSquare(CPM_ES_CEREAL_NS::CerealCore& co
     };
     size_t vboByteSize = vboFloatSize * sizeof(float);
 
-    vbo = vboMan.addInMemoryVBO(
+    vbo = vboMan->addInMemoryVBO(
         static_cast<void*>(vboData), vboByteSize,
         { std::make_tuple("aPos", 3 * sizeof(float), false),
           std::make_tuple("aLineCircum", 1 * sizeof(float), false) },
@@ -51,7 +51,7 @@ std::pair<ren::VBO, ren::IBO> getLineUnitSquare(CPM_ES_CEREAL_NS::CerealCore& co
   iboComp.primMode = GL_LINES;
   iboComp.numPrims = iboIntSize;
 
-  GLuint ibo = iboMan.hasIBO(assetName);
+  GLuint ibo = iboMan->hasIBO(assetName);
   if (ibo == 0)
   {
     // Build an IBO
@@ -61,7 +61,7 @@ std::pair<ren::VBO, ren::IBO> getLineUnitSquare(CPM_ES_CEREAL_NS::CerealCore& co
     };
     size_t iboByteSize = iboIntSize * sizeof(uint16_t);
 
-    ibo = iboMan.addInMemoryIBO(static_cast<void*>(iboData), iboByteSize,
+    ibo = iboMan->addInMemoryIBO(static_cast<void*>(iboData), iboByteSize,
                                 iboComp.primMode, iboComp.primType,
                                 iboComp.numPrims, assetName);
   }
@@ -74,9 +74,9 @@ std::pair<ren::VBO, ren::IBO> getLineUnitSquare(CPM_ES_CEREAL_NS::CerealCore& co
 GLuint getColorLineShader(CPM_ES_CEREAL_NS::CerealCore& core)
 {
   const char* colorLineShaderName = "_memColorLine";
-  ren::ShaderMan& shaderMan = *core.getStaticComponent<ren::StaticShaderMan>()->instance;
+  ren::ShaderMan* shaderMan = core.getStaticComponent<ren::StaticShaderMan>()->instance_;
 
-  GLuint shaderID = shaderMan.getIDForAsset(colorLineShaderName);
+  GLuint shaderID = shaderMan->getIDForAsset(colorLineShaderName);
   if (shaderID == 0)
   {
     const char* vs =
@@ -103,7 +103,7 @@ GLuint getColorLineShader(CPM_ES_CEREAL_NS::CerealCore& core)
         "  gl_FragColor = fColor;\n"
         "}\n";
 
-    shaderID = shaderMan.addInMemoryVSFS(vs, fs, colorLineShaderName);
+    shaderID = shaderMan->addInMemoryVSFS(vs, fs, colorLineShaderName);
   }
 
   return shaderID;

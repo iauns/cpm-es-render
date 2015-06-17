@@ -174,10 +174,10 @@ public:
 
   void postWalkComponents(es::ESCoreBase& core)
   {
-    StaticVBOMan* man = core.getStaticComponent<StaticVBOMan>();
+    VBOMan* man = core.getStaticComponent<StaticVBOMan>()->instance_;
     if (man != nullptr)
     {
-      man->instance->runGCAgainstVaidIDs(mValidKeys);
+      man->runGCAgainstVaidIDs(mValidKeys);
       mValidKeys.clear();
     }
     else
